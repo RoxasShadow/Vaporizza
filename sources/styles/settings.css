@@ -1,0 +1,14 @@
+* {
+  margin            : 0;
+  padding           : 0;
+}
+
+body {
+  width             : 150px;
+  height            : 150px;
+  margin            : 2px 0;
+}
+
+p {
+  margin            : 10px 0px;
+}

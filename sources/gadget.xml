@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <gadget>
-  <name>Vaporizza</name>
-  <version>0.6</version>
-  <author name="Giovanni Capuano">
-    <info url="https://github.com/RoxasShadow" />
-    <logo src="logo.jpg" />
-  </author>
-  <copyright>&#169; Giovanni Capuano</copyright>
-  <description>Displays and allows to run a list of your Steam games on your desktop.</description>
-  <icons>
-    <icon height="64" width="64" src="icon.png" />
-  </icons>
-  <hosts>
-    <host name="sidebar">
-      <base type="HTML" apiVersion="1.0.0" src="gadget.html" />
-      <permissions>Full</permissions>
-      <platform minPlatformVersion="1.0" />
-    </host>
-  </hosts>
+	<name>Vaporizza</name>
+	<version>0.7</version>
+	<author name="Giovanni Capuano">
+		<info url="https://github.com/RoxasShadow" />
+		<logo src="images/logo.jpg" />
+	</author>
+	<copyright>&#169; Giovanni Capuano</copyright>
+	<description>Displays and allows to run a list of your Steam games on your desktop.</description>
+	<icons>
+		<icon height="64" width="64" src="images/icon.png" />
+	</icons>
+	<hosts>
+		<host name="sidebar">
+			<base type="HTML" apiVersion="1.0.0" src="gadget.html" />
+			<permissions>Full</permissions>
+			<platform minPlatformVersion="1.0" />
+		</host>
+	</hosts>
 </gadget>
