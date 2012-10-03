@@ -8,8 +8,11 @@
 		<script language="javascript" src="gadget.js"></script>
 		<script language="javascript">
 			$(document).ready(function() {
-        System.Gadget.settingsUI       = 'settings.html';
-        System.Gadget.onSettingsClosed = init;
+        
+        System.Gadget.onDock            = CheckDockState;
+        System.Gadget.onUndock          = CheckDockState;
+        System.Gadget.settingsUI        = 'settings.html';
+        System.Gadget.onSettingsClosed  = init;
         
 				$.support.cors = true;
         

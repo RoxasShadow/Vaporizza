@@ -106,32 +106,49 @@ function Steam(fso, shell) {
 		var image;
 		if (imagesize == 'small') {
 			image = 'capsule_231x87.jpg';
-			$('body').css('width', '231px');
+			$('body').css('width', '251px');
 		} else if (imagesize == 'medium') {
 			image = 'header_292x136.jpg';
-			$('body').css('width', '292px');
+			$('body').css('width', '312px');
 		} else {
 			image = 'header.jpg';
-			$('body').css('width', '460px');
+			$('body').css('width', '480px');
 		}
 
 		for (var i = 0; i < length; ++i)
 			$('#gamelist').append('<li class="game"><a href="steam://rungameid/' + gamelist[i].id + '"><img src="http://cdn.steampowered.com/v/gfx/apps/' + gamelist[i].id + '/' + image + '" /></a></li>');
 
 		if (length > 0)
-			$('body').css('height', (screen.height - 50) + 'px').css('overflow', 'scroll');
+			$('body').css('height', (screen.height - 50) + 'px').css('overflow', 'auto');
 		else
 			$('#bg').text('Your Steam gamelist is empty');
 	}
   
-  this.getImageSize = function() {
-    var imagesize = System.Gadget.Settings.readString('imagesize');
-    if(imagesize == '' || (imagesize != 'small' && imagesize != 'medium' && imagesize != 'large'))
-      return 'small';
+  this.getSettings = function(what) {
+    if(what == 'imagesize') {
+      var imagesize = System.Gadget.Settings.readString('imagesize');
+      if(imagesize == '' || (imagesize != 'small' && imagesize != 'medium' && imagesize != 'large'))
+        return 'small';
+      else
+        return imagesize;
+    }
     else
-      return imagesize;
+      return System.Gadget.Settings.readString(what);
   }
   
+}
+
+function CheckDockState() {
+  var height         = (screen.height - 50) / 2;
+  var scaleDocked    = 1;
+  var scaleUndocked  = 2;
+  var timeTransition = 2;
+  var oBody          = document.body.style;
+  
+  if (System.Gadget.docked)
+      $('body').css('height', height * scaleDocked);
+  else
+      $('body').css('height', height * scaleUndocked);
 }
 
 function init() {
@@ -145,13 +162,13 @@ function init() {
 		var userData = steam.getConfig(path, '\\config\\localconfig.vdf');
 
 		var gamelist  = [];
-		var imagesize = steam.getImageSize();
+		var imagesize = steam.getSettings('imagesize');
 		var username  = steam.loadGames(gamelist, gameData, userData);
 		    gamelist  = steam.convalidateGames(gamelist, username, imagesize);
-
+    
 		steam.printGameList(gamelist, imagesize);
 
 	} catch(e) {
-		$('#bg').text(e.message);
+    $('#bg').text(e.message);
 	}
 }

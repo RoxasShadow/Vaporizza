@@ -25,7 +25,7 @@ function saveSettings() {
 }
 
 function getSettings() {
-  $('#imagesize').val(System.Gadget.Settings.readString('imagesize'));
+  $('#imagesize') .val(System.Gadget.Settings.readString('imagesize'));
 }
 
 function init() {
