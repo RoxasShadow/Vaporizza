@@ -10,6 +10,7 @@ body {
   font-family       : verdana;
   font-weight       : bold;
   font-size         : 12pt;
+  overflow          : auto;
 }
 
 #bg {

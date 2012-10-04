@@ -19,52 +19,48 @@ function Steam(fso, shell) {
 
 	this.getConfig = function(path, file) {
 		var folder = fso.GetFolder(path);
-		var sub = new Enumerator(folder.SubFolders);
+		var sub    = new Enumerator(folder.SubFolders);
 
 		if (sub.atEnd())
 			return false;
-
-		return fso.OpenTextFile(sub.item() + file).ReadAll().replace(/"[\t ]+"/gm, "\" : \"").replace(/"([\t\r\n ]+\{)/g, "\":$1").replace(/([}"])([\t\r\n ]+\")/g, "$1,$2");
+    
+    return fso.OpenTextFile(sub.item() + file).ReadAll().replace(/"[\t ]+"/gm, "\" : \"").replace(/"([\t\r\n ]+\{)/g, "\":$1").replace(/([}"])([\t\r\n ]+\")/g, "$1,$2");
 	}
+  
+  this.getUserID = function(path, file) {
+    return fso.OpenTextFile(path + file).ReadAll();
+  }
 
 	this.loadGames = function(gamelist, gameData, userData) {
-		var games, username;
+		var games;
 
 		if (gameData != false) {
 			games = eval('({' + gameData + '})');
 			games = (games.UserLocalConfigStore || games.UserRoamingConfigStore);
 			games = games.Software.Valve.Steam.apps;
 			for (var id in games)
-			gamelist.push({
-				id : id,
-				name : '',
-				lastplayed : games[id].lastplayed,
-				tags : games[id].tags
-			});
+        gamelist.push({
+          id          : id,
+          name        : '',
+          lastplayed  : games[id].lastplayed,
+          tags        : games[id].tags
+        });
 		}
-
-		if (userData != false) {
-			username = eval('({' + userData + '})');
-			username = username.UserLocalConfigStore || games.UserRoamingConfigStore;
-			username = username.friends.PersonaName;
-		}
-
-		return username;
 	}
-
-	this.convalidateGames = function(gamelist, username, imagesize) {
+    
+	this.convalidateGames = function(gamelist, userid, imagesize) {
 		var filteredGamelist = [];
 
 		$.ajax({
-			url : 'http://steamcommunity.com/id/' + username + '/games?tab=all&xml=1',
-			type : 'get',
-			dataType : 'xml',
-			async : false,
-			success : function(data) {
+			url       : 'http://steamcommunity.com/id/' + userid + '/games?tab=all&xml=1',
+			type      : 'get',
+			dataType  : 'xml',
+			async     : false,
+			success   : function(data) {
 
 				var allowedGames = [];
 				$('game', data).each(function() {
-					id = $('appID', this).text();
+					id   = $('appID', this).text();
 					name = $('name', this).text();
 
 					allowedGames.push(id);
@@ -100,7 +96,7 @@ function Steam(fso, shell) {
 	}
 
 	this.printGameList = function(gamelist, imagesize) {
-		var length = gamelist.length;
+    var length = gamelist.length;
 		$('#gamelist').text('');
 
 		var image;
@@ -117,11 +113,6 @@ function Steam(fso, shell) {
 
 		for (var i = 0; i < length; ++i)
 			$('#gamelist').append('<li class="game"><a href="steam://rungameid/' + gamelist[i].id + '"><img src="http://cdn.steampowered.com/v/gfx/apps/' + gamelist[i].id + '/' + image + '" /></a></li>');
-
-		if (length > 0)
-			$('body').css('height', (screen.height - 50) + 'px').css('overflow', 'auto');
-		else
-			$('#bg').text('Your Steam gamelist is empty');
 	}
   
   this.getSettings = function(what) {
@@ -157,18 +148,29 @@ function init() {
 		var shell = new ActiveXObject('WScript.Shell');
 		var steam = new Steam(fso, shell);
 
-		var path     = steam.getInstallationPath() + '\\userdata\\';
-		var gameData = steam.getConfig(path, '\\7\\remote\\sharedconfig.vdf');
-		var userData = steam.getConfig(path, '\\config\\localconfig.vdf');
-
+		var path     = steam.getInstallationPath();
+    var userdata = path + '\\userdata';
+    
+		var gameData = steam.getConfig(userdata, '\\7\\remote\\sharedconfig.vdf');
+		var userData = steam.getConfig(userdata, '\\config\\localconfig.vdf');
+		var userID   = steam.getUserID(path,     '\\userid.txt');
+    
 		var gamelist  = [];
 		var imagesize = steam.getSettings('imagesize');
-		var username  = steam.loadGames(gamelist, gameData, userData);
-		    gamelist  = steam.convalidateGames(gamelist, username, imagesize);
+		steam.loadGames(gamelist, gameData, userData);
+    gamelist      = steam.convalidateGames(gamelist, userID, imagesize);
     
-		steam.printGameList(gamelist, imagesize);
+    if(gamelist.length == 0) {
+      $('body').css('height', '500px')
+      $('#bg').text('Your Steam gamelist is empty.');
+    }
+    else {
+			$('body').css('height', (screen.height - 50) + 'px');
+      steam.printGameList(gamelist, imagesize);
+    }
 
-	} catch(e) {
+	}
+  catch(e) {
     $('#bg').text(e.message);
 	}
 }
