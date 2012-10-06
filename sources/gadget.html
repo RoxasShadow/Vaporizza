@@ -3,18 +3,28 @@
 	<head>
 		<title>Vaporizza</title>
 		<meta   charset="UTF-8" />
-		<link   rel="stylesheet"      type="text/css" href="css/gadget.css" />
+		<link   rel="stylesheet"      href="css/gadget.css" type="text/css" />
 		<script language="javascript" src="lib/jquery.js"></script>
 		<script language="javascript" src="js/gadget.js"></script>
+
+		<link   rel="stylesheet"      href="css/jquery.mCustomScrollbar.css" type="text/css" />
+    <script language="javascript" src="lib/jquery-ui.min.js"></script>
+    <script language="javascript" src="lib/jquery.mousewheel.min.js"></script>
+    <script language="javascript" src="lib/jquery.mCustomScrollbar.min.js"></script>
+
 		<script language="javascript">
 			$(document).ready(function() {
         
-        System.Gadget.onDock            = CheckDockState;
-        System.Gadget.onUndock          = CheckDockState;
+        System.Gadget.onDock            = checkDockState;
+        System.Gadget.onUndock          = checkDockState;
         System.Gadget.settingsUI        = 'settings.html';
         System.Gadget.onSettingsClosed  = init;
         
 				$.support.cors = true;
+        $('body').mCustomScrollbar({
+          scrollEasing      : 'easeOutQuint',
+          autoDraggerLength : false 
+        });
         
 				init();
         

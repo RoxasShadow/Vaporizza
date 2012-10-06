@@ -129,7 +129,7 @@ function Steam(fso, shell) {
   
 }
 
-function CheckDockState() {
+function checkDockState() {
   var height         = (screen.height - 50) / 2;
   var scaleDocked    = 1;
   var scaleUndocked  = 2;

@@ -1,7 +1,8 @@
 Vaporize all your desktop icons!
 Just a pretty gadget for Windows 7 which displays and allows to run a list of your Steam games on your desktop.
 
-HOWTO config and install:
+HOWTO install:
+  Be sure your Steam profile is public;
   Go in your Steam path (usually C:\Program Files (x86)\Steam\ or C:\Program Files\Steam\) and create here a text file called 'userid.txt';
   Go in your Steam profile, paste in 'userid.txt' your userID (http://steamcommunity.com/id/HappyUser/ => HappyUser) and save it;
   Install the gadget just clicking on it;
@@ -9,4 +10,4 @@ HOWTO config and install:
   ???
   Profit!
 
-Screenshots: http://i.imgur.com/4GVNk.jpg | http://i.imgur.com/5vSnW.jpg
+Screenshots: http://i.imgur.com/qaFfH.jpg | http://i.imgur.com/fnmG8.jpg
