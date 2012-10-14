@@ -37,6 +37,14 @@ a:hover {
   list-style        : none;
 }
 
+.noimage {
+  color             : #fff;
+  text-align        : center;
+  text-decoration   : none;
+  background-color  : #000;
+  line-height       : 100px;
+}
+
 .game {
   padding           : 0;
   float             : left;

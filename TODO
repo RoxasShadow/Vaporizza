@@ -1,1 +1,5 @@
-- Automating userID fetch
+- Speed up the non-Steam games fetching
+- Circle gif image while loading non-Steam games (or just see above...)
+- Lastplayed and running by Steam URL for non-Steam games
+- Automated userID fetching
+- Manually changable games position

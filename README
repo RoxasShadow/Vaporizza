@@ -10,4 +10,8 @@ HOWTO install:
   ???
   Profit!
 
+In order to various applications in Steam (Origin, free-DRM, uPlay games or whatever), just Steam -> Games -> Add a non steam game to my library.
+To add them on Vaporizza, run (and/or copy it in the Windows startup folder) tools/SteamShortcutsToXML.exe.
+If you want to get the source of SteamShortcutsToXML, just search it through my repositories.
+
 Screenshots: http://i.imgur.com/qaFfH.jpg | http://i.imgur.com/fnmG8.jpg

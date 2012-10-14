@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Vaporizza - Settings</title>
-		<meta   charset="UTF-8" />
-		<link   rel="stylesheet"      href="css/settings.css" type="text/css" />
-		<script language="javascript" src="lib/jquery.js"></script>
-		<script language="javascript" src="js/settings.js"></script>
-    
-		<script language="javascript">
-			$(document).ready(function() {
-				init();
-			});
-		</script>
-	</head>
+  <head>
+    <title>Vaporizza - Settings</title>
+    <meta   charset="UTF-8" />
+    <link   rel="stylesheet"      href="css/settings.css" type="text/css" />
+    <script language="javascript" src="lib/jquery.js"></script>
+    <script language="javascript" src="js/settings.js"></script>
 
-	<body id="settings">
-		<p>
+    <script language="javascript">
+      $(document).ready(function() {
+        init();
+      });
+    </script>
+  </head>
+
+  <body id="settings">
+  
+    <p>
       <label for="imagesize">Cover size</label>
       <select id="imagesize">
         <option value="small">Small</option>
@@ -23,5 +24,18 @@
         <option value="large">Large</option>
       </select>
     </p>
-	</body>
+    
+    <p>
+      <input type="checkbox" id="nonsteam" /> Non-Steam games
+    </p>
+    
+    <p>
+      <label for="order">Steam games on</label>
+      <select id="order">
+        <option value="SteamGamesOnTop">Top</option>
+        <option value="SteamGamesOnBottom">Bottom</option>
+      </select>
+    </p>
+    
+  </body>
 </html>
