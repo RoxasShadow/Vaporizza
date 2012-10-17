@@ -31,6 +31,7 @@ a {
 
 a:hover {
   border-color      : #999;
+  cursor            : pointer;
 }
 
 #gamelist {

@@ -67,9 +67,9 @@ function Steam(fso, shell) {
           appID = appID.split('/app/')[1].split('/')[0];
 
         if(appID != undefined)
-          $('#gamelist').append('<li class="game"><a href="#" onclick="run(\'' + escape(game.exe.replace(/\\/g, '\\\\')) + '\');"><img alt="' + game.name + '" src="http://cdn.steampowered.com/v/gfx/apps/' + appID + '/' + image + '" /></a></li>');
+          $('#gamelist').append('<li class="game"><a onclick="run(\'' + escape(game.exe.replace(/\\/g, '\\\\')) + '\');"><img alt="' + game.name + '" src="http://cdn.steampowered.com/v/gfx/apps/' + appID + '/' + image + '" /></a></li>');
         else
-          $('#gamelist').append('<li class="game"><a href="#" onclick="run(\'' + escape(game.exe.replace(/\\/g, '\\\\')) + '\');"><p class="noimage">' + game.name + '</p></a></li>');
+          $('#gamelist').append('<li class="game"><a onclick="run(\'' + escape(game.exe.replace(/\\/g, '\\\\')) + '\');"><p class="noimage">' + game.name + '</p></a></li>');
       }
     });
   }
