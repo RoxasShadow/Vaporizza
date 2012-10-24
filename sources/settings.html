@@ -9,6 +9,7 @@
 
     <script language="javascript">
       $(document).ready(function() {
+        $.support.cors = true;
         init();
       });
     </script>
@@ -17,7 +18,7 @@
   <body id="settings">
   
     <p>
-      <label for="imagesize">Cover size</label>
+      <label for="imagesize">Cover size</label><br />
       <select id="imagesize">
         <option value="small">Small</option>
         <option value="medium">Medium</option>
@@ -30,12 +31,14 @@
     </p>
     
     <p>
-      <label for="order">Steam games on</label>
+      <label for="order">Steam games on</label><br />
       <select id="order">
         <option value="SteamGamesOnTop">Top</option>
         <option value="SteamGamesOnBottom">Bottom</option>
       </select>
     </p>
+    
+    <p id="update">Searching for updates...</p>
     
   </body>
 </html>

@@ -56,7 +56,7 @@ function Steam(fso, shell) {
 
   this.getImageBySteam = function(game, image) {
     $.ajax({
-      url       : 'http://store.steampowered.com/search/?snr=1_4_4__12&term=' + encodeURIComponent(game.name) + '&category1=998',
+      url       : 'http://store.steampowered.com/search/?snr=1_4_4__12&term="' + encodeURIComponent(game.name) + '"&category1=998',
       type      : 'get',
       dataType  : 'html',
       async     : false,
@@ -69,7 +69,7 @@ function Steam(fso, shell) {
         if(appID != undefined)
           $('#gamelist').append('<li class="game"><a onclick="run(\'' + escape(game.exe.replace(/\\/g, '\\\\')) + '\');"><img alt="' + game.name + '" src="http://cdn.steampowered.com/v/gfx/apps/' + appID + '/' + image + '" /></a></li>');
         else
-          $('#gamelist').append('<li class="game"><a onclick="run(\'' + escape(game.exe.replace(/\\/g, '\\\\')) + '\');"><p class="noimage">' + game.name + '</p></a></li>');
+          $('#gamelist').append('<li class="game nocover"><a onclick="run(\'' + escape(game.exe.replace(/\\/g, '\\\\')) + '\');"><img alt="' + game.name + '" src="http://www.giovannicapuano.net/vaporizza/header.php?get=' + image + '&text=' + game.name +'" /></a></li>');
       }
     });
   }

@@ -20,19 +20,32 @@ function SettingsClosing(event) {
       saveSettings();
 }
 
-function saveSettings() {
-  System.Gadget.Settings.writeString('imagesize', $('#imagesize').val());
-  System.Gadget.Settings.writeString('order',     $('#order').val());
-  System.Gadget.Settings.writeString('nonsteam',  $('#nonsteam').is(':checked') ? 'true' : 'false');
-}
-
 function getSettings() {
   $('#imagesize') .val  (             System.Gadget.Settings.readString('imagesize'));
   $('#order')     .val  (             System.Gadget.Settings.readString('order'));
   $('#nonsteam')  .attr ('checked',   System.Gadget.Settings.readString('nonsteam') != 'false');
 }
 
+function saveSettings() {
+  System.Gadget.Settings.writeString('imagesize', $('#imagesize').val());
+  System.Gadget.Settings.writeString('order',     $('#order').val());
+  System.Gadget.Settings.writeString('nonsteam',  $('#nonsteam').is(':checked') ? 'true' : 'false');
+}
+
+function update(local) {
+  $.getJSON('https://api.github.com/repos/RoxasShadow/Vaporizza/downloads', function(data) {
+    var remote = data[0].name.split('- ')[1].replace('.gadget', '');
+    if(remote == undefined)
+      $('#update').html('Error obtaining update informations.');
+    else if(remote == local)
+      $('#update').html('No updates available.');
+    else
+      $('#update').html('<a href="https://github.com/RoxasShadow/Vaporizza/downloads">An update is available (' + remote + ').</a>');
+  });
+}
+
 function init() {
   System.Gadget.onSettingsClosing = SettingsClosing;
   getSettings();
+  update(System.Gadget.version);
 }

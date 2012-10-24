@@ -50,3 +50,7 @@ a:hover {
   padding           : 0;
   float             : left;
 }
+
+.nocover {
+  background-color  : #fff;
+}
