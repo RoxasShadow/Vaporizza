@@ -54,9 +54,10 @@ function Steam(fso, shell) {
     return file;
   }
 
-  this.getImageBySteam = function(game, image) {
+  this.getImageBySteam = function(game, image, customcover) {
+    var url = (customcover ? '"' : '') + ' + ' + encodeURIComponent(game.name) + (customcover ? '"' : '') + '&category1=998';
     $.ajax({
-      url       : 'http://store.steampowered.com/search/?snr=1_4_4__12&term="' + encodeURIComponent(game.name) + '"&category1=998',
+      url       : 'http://store.steampowered.com/search/?snr=1_4_4__12&term=' + url,
       type      : 'get',
       dataType  : 'html',
       async     : false,
@@ -159,7 +160,7 @@ function Steam(fso, shell) {
     return filteredGamelist;
   }
 
-  this.printGameList = function(gamelist, imagesize, gamelist2, order) {
+  this.printGameList = function(gamelist, imagesize, gamelist2, order, customcover) {
     $('#gamelist').text('');
 
     var image;
@@ -172,14 +173,14 @@ function Steam(fso, shell) {
 
     if((gamelist2 != undefined || gamelist2.length > 0) && order == 'SteamGamesOnBottom')
       for(var i = 0, length = gamelist2.length; i < length; ++i)
-        steam.getImageBySteam(gamelist2[i], image);
+        steam.getImageBySteam(gamelist2[i], image, customcover);
 
     for(var i = 0, length = gamelist.length; i < length; ++i)
       $('#gamelist').append('<li class="game"><a href="steam://rungameid/' + gamelist[i].id + '"><img alt="' + gamelist[i].name + '" src="http://cdn.steampowered.com/v/gfx/apps/' + gamelist[i].id + '/' + image + '" /></a></li>');
 
     if((gamelist2 != undefined || gamelist2.length > 0) && order != 'SteamGamesOnBottom')
       for(var i = 0, length = gamelist2.length; i < length; ++i)
-        steam.getImageBySteam(gamelist2[i], image);
+        steam.getImageBySteam(gamelist2[i], image, customcover);
 
     if(imagesize == 'small') {
       $('body')     .css('width', '251px');

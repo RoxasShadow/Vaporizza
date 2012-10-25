@@ -21,15 +21,17 @@ function SettingsClosing(event) {
 }
 
 function getSettings() {
-  $('#imagesize') .val  (             System.Gadget.Settings.readString('imagesize'));
-  $('#order')     .val  (             System.Gadget.Settings.readString('order'));
-  $('#nonsteam')  .attr ('checked',   System.Gadget.Settings.readString('nonsteam') != 'false');
+  $('#imagesize')  .val  (             System.Gadget.Settings.readString('imagesize'));
+  $('#order')      .val  (             System.Gadget.Settings.readString('order'));
+  $('#nonsteam')   .attr ('checked',   System.Gadget.Settings.readString('nonsteam')     != 'false');
+  $('#customcover') .attr ('checked',   System.Gadget.Settings.readString('customcover') != 'false');
 }
 
 function saveSettings() {
-  System.Gadget.Settings.writeString('imagesize', $('#imagesize').val());
-  System.Gadget.Settings.writeString('order',     $('#order').val());
-  System.Gadget.Settings.writeString('nonsteam',  $('#nonsteam').is(':checked') ? 'true' : 'false');
+  System.Gadget.Settings.writeString('imagesize',  $('#imagesize').val());
+  System.Gadget.Settings.writeString('order',      $('#order').val());
+  System.Gadget.Settings.writeString('nonsteam',   $('#nonsteam').is(':checked')     ? 'true' : 'false');
+  System.Gadget.Settings.writeString('customcover', $('#customcover').is(':checked') ? 'true' : 'false');
 }
 
 function update(local) {
