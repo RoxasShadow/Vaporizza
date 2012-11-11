@@ -30,6 +30,10 @@ function run(path) {
 function Steam(fso, shell) {
   var steam = this;
 
+  this.compare = function(a, b) {
+    return ((a.name > b.name) ? 1 : ((a.name < b.name) ? -1 : 0));
+  }
+
   this.getConfig = function(path, file) {
     var folder  = fso.GetFolder(path);
     var sub     = new Enumerator(folder.SubFolders);
@@ -55,9 +59,8 @@ function Steam(fso, shell) {
   }
 
   this.getImageBySteam = function(game, image, customcover) {
-    var url = (customcover ? '"' : '') + ' + ' + encodeURIComponent(game.name) + (customcover ? '"' : '') + '&category1=998';
     $.ajax({
-      url       : 'http://store.steampowered.com/search/?snr=1_4_4__12&term=' + url,
+      url       : 'http://store.steampowered.com/search/?snr=1_4_4__12&term=+' + encodeURIComponent(game.name) + '&category1=998',
       type      : 'get',
       dataType  : 'html',
       async     : false,
@@ -68,9 +71,9 @@ function Steam(fso, shell) {
           appID = appID.split('/app/')[1].split('/')[0];
 
         if(appID != undefined)
-          $('#gamelist').append('<li class="game"><a onclick="run(\'' + escape(game.exe.replace(/\\/g, '\\\\')) + '\');"><img alt="' + game.name + '" src="http://cdn.steampowered.com/v/gfx/apps/' + appID + '/' + image + '" /></a></li>');
+          $('#gamelist').append('<li class="game"         ><a onclick="run(\'' + escape(game.exe.replace(/\\/g, '\\\\')) + '\');"><img alt="' + game.name + '" src="http://cdn.steampowered.com/v/gfx/apps/' + appID + '/' + image + '" /></a></li>');
         else
-          $('#gamelist').append('<li class="game nocover"><a onclick="run(\'' + escape(game.exe.replace(/\\/g, '\\\\')) + '\');"><img alt="' + game.name + '" src="http://www.giovannicapuano.net/vaporizza/header.php?get=' + image + '&text=' + game.name +'" /></a></li>');
+          $('#gamelist').append('<li class="game nocover" ><a onclick="run(\'' + escape(game.exe.replace(/\\/g, '\\\\')) + '\');"><img alt="' + game.name + '" src="http://www.giovannicapuano.net/vaporizza/header.php?get=' + image + '&text=' + game.name +'" /></a></li>');
       }
     });
   }
@@ -96,22 +99,25 @@ function Steam(fso, shell) {
   this.getUserID = function(path, file) {
     return fso.OpenTextFile(path + file).ReadAll();
   }
-
-  this.compare = function(a, b) {
-    return ((a.lastplayed < b.lastplayed) ? 1 : ((a.lastplayed > b.lastplayed) ? -1 : 0));
-  }
-
-  this.loadGames = function(gamelist, gameData) {
-    var games = eval('({' + gameData + '})');
-    games     = (games.UserLocalConfigStore || games.UserRoamingConfigStore);
-    games     = games.Software.Valve.Steam.apps;
-    for(var id in games)
-      gamelist.push({
-        id          : id,
-        name        : '',
-        lastplayed  : games[id].lastplayed,
-        tags        : games[id].tags
-      });
+  
+  this.loadSteamGames = function(gamelist, userid) {
+    $.ajax({
+      url       : 'http://steamcommunity.com/id/' + userid + '/games?tab=all',
+      type      : 'get',
+      dataType  : 'text',
+      async     : false,
+      success   : function(data) {
+        json = eval(data.match(/^var rgGames = (.*);$/gm).toString().replace('var rgGames = ', '').replace(';', '').replace(/\\\//gi, '/'));
+        for(var i = 0, length = json.length; i < length; ++i)
+          gamelist.push({
+            appid     : json[i].appid,
+            name      : json[i].name/*,
+            hours     : json[i].hours_forever,
+            installed : json[i].client_summary.state == 'installed',
+            size      : json[i].client_summary.localContentSize*/
+          });
+      }
+    });
   }
 
   this.loadNonSteamGames = function(gamelist, shortcuts) {
@@ -125,44 +131,7 @@ function Steam(fso, shell) {
     });
   }
 
-  this.convalidateGames = function(gamelist, userid, imagesize) {
-    var filteredGamelist  = [];
-
-    $.ajax({
-      url       : 'http://steamcommunity.com/id/' + userid + '/games?tab=all&xml=1',
-      type      : 'get',
-      dataType  : 'xml',
-      async     : false,
-      success   : function(data) {
-
-        var allowedGames  = [];
-        $('game', data).each(function() {
-          id    = $('appID', this).text();
-          name  = $('name', this).text();
-
-          allowedGames.push(id);
-
-          $.each(gamelist, function(i, game) {
-            if(game.id == id)
-              game.name = name;
-          });
-        });
-
-        $.each(gamelist, function(i, game) {
-          if($.inArray(game.id, allowedGames) != -1)
-            filteredGamelist.push(game);
-        });
-
-      }
-    });
-
-    filteredGamelist.sort(steam.compare);
-    return filteredGamelist;
-  }
-
-  this.printGameList = function(gamelist, imagesize, gamelist2, order, customcover) {
-    $('#gamelist').text('');
-
+  this.printGameList = function(games, imagesize, customcover) {
     var image;
     if(imagesize == 'small')
       image = 'capsule_231x87.jpg';
@@ -170,17 +139,6 @@ function Steam(fso, shell) {
       image = 'header_292x136.jpg';
     else
       image = 'header.jpg';
-
-    if((gamelist2 != undefined || gamelist2.length > 0) && order == 'SteamGamesOnBottom')
-      for(var i = 0, length = gamelist2.length; i < length; ++i)
-        steam.getImageBySteam(gamelist2[i], image, customcover);
-
-    for(var i = 0, length = gamelist.length; i < length; ++i)
-      $('#gamelist').append('<li class="game"><a href="steam://rungameid/' + gamelist[i].id + '"><img alt="' + gamelist[i].name + '" src="http://cdn.steampowered.com/v/gfx/apps/' + gamelist[i].id + '/' + image + '" /></a></li>');
-
-    if((gamelist2 != undefined || gamelist2.length > 0) && order != 'SteamGamesOnBottom')
-      for(var i = 0, length = gamelist2.length; i < length; ++i)
-        steam.getImageBySteam(gamelist2[i], image, customcover);
 
     if(imagesize == 'small') {
       $('body')     .css('width', '251px');
@@ -199,6 +157,16 @@ function Steam(fso, shell) {
       $('.noimage') .css('width', '460px');
       $('.noimage') .css('height', '215px');
       $('.noimage') .css('line-height', '107.5px');
+    }
+    
+    for(var i = 0, length = games.length; i < length; ++i) {
+      if(games[i] == undefined)
+        continue;
+        
+      if(games[i].appid != undefined)
+        $('#gamelist').append('<li class="game"><a href="steam://rungameid/' + games[i].appid + '"><img alt="' + games[i].name + '" src="http://cdn.steampowered.com/v/gfx/apps/' + games[i].appid + '/' + image + '" /></a></li>');
+      else
+        steam.getImageBySteam(games[i], image);
     }
   }
 }

@@ -1,5 +1,3 @@
-- Speed up the non-Steam games fetching
-- Circle gif image while loading non-Steam games (or just see above...)
-- Lastplayed and running by Steam URL for non-Steam games
+- Speed up the non-Steam's covers fetching (try setting steam.getImageBySteam() in async using a placeholder to keep tidy the widget entries)
 - Automated userID fetching
-- Manually changable games position
+- Get game infos clicking on it with the mouse right-click

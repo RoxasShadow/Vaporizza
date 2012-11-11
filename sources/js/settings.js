@@ -22,16 +22,12 @@ function SettingsClosing(event) {
 
 function getSettings() {
   $('#imagesize')  .val  (             System.Gadget.Settings.readString('imagesize'));
-  $('#order')      .val  (             System.Gadget.Settings.readString('order'));
   $('#nonsteam')   .attr ('checked',   System.Gadget.Settings.readString('nonsteam')     != 'false');
-  $('#customcover') .attr ('checked',   System.Gadget.Settings.readString('customcover') != 'false');
 }
 
 function saveSettings() {
-  System.Gadget.Settings.writeString('imagesize',  $('#imagesize').val());
-  System.Gadget.Settings.writeString('order',      $('#order').val());
-  System.Gadget.Settings.writeString('nonsteam',   $('#nonsteam').is(':checked')     ? 'true' : 'false');
-  System.Gadget.Settings.writeString('customcover', $('#customcover').is(':checked') ? 'true' : 'false');
+  System.Gadget.Settings.writeString('imagesize',   $('#imagesize')  .val());
+  System.Gadget.Settings.writeString('nonsteam',    $('#nonsteam')   .is(':checked') ? 'true' : 'false');
 }
 
 function update(local) {
@@ -42,7 +38,7 @@ function update(local) {
     else if(remote == local)
       $('#update').html('No updates available.');
     else
-      $('#update').html('<a href="https://github.com/RoxasShadow/Vaporizza/downloads">An update is available (' + remote + ').</a>');
+      $('#update').html('<a href="https://github.com/RoxasShadow/Vaporizza/downloads">An update is available (' + $.trim(remote) + ').</a>');
   });
 }
 

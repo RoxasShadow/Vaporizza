@@ -42,12 +42,9 @@ function init() {
     var gamelist  = [];
     var gamelist2 = [];
     var imagesize = steam.getSettings('imagesize');
-    var order     = steam.getSettings('order');
     var nonsteam  = steam.getSettings('nonsteam')    != 'false' ? true : false;
-    var force     = steam.getSettings('customcover') != 'false' ? true : false;
 
-    steam.loadGames(gamelist, gameData);
-    gamelist      = steam.convalidateGames(gamelist, userID, imagesize);
+    steam.loadSteamGames(gamelist, userID);
 
     if(nonsteam) {
       var shortcuts = steam.getFile(path + '\\shortcuts.xml');
@@ -61,7 +58,10 @@ function init() {
     }
     else {
       $('body') .css('height', (screen.height - 50) + 'px');
-      steam.printGameList(gamelist, imagesize, gamelist2, order, force);
+      $('#gamelist').text('');
+      var games = gamelist.concat(gamelist2);
+      games.sort(steam.compare);
+      steam.printGameList(games, imagesize);
     }
 
   }
