@@ -65,15 +65,16 @@ function Steam(fso, shell) {
       dataType  : 'html',
       async     : false,
       success   : function(data) {
-        var appID = $(data).find('.search_result_row').attr('href');
-
+        var appID   = $(data).find('.search_result_row').attr('href');
+        var onclick = game.id == '' ? 'onclick="run(\'' + escape(game.exe.replace(/\\/g, '\\\\')) + '\');"' : 'href="steam://rungameid/' + game.id + '"';
+        
         if(appID != undefined)
           appID = appID.split('/app/')[1].split('/')[0];
 
         if(appID != undefined)
-          $('#gamelist').append('<li class="game"         ><a onclick="run(\'' + escape(game.exe.replace(/\\/g, '\\\\')) + '\');"><img alt="' + game.name + '" src="http://cdn.steampowered.com/v/gfx/apps/' + appID + '/' + image + '" /></a></li>');
+          $('#gamelist').append('<li class="game"         ><a ' + onclick + '><img alt="' + game.name + '" src="http://cdn.steampowered.com/v/gfx/apps/' + appID + '/' + image + '" /></a></li>');
         else
-          $('#gamelist').append('<li class="game nocover" ><a onclick="run(\'' + escape(game.exe.replace(/\\/g, '\\\\')) + '\');"><img alt="' + game.name + '" src="http://www.giovannicapuano.net/vaporizza/header.php?get=' + image + '&text=' + game.name +'" /></a></li>');
+          $('#gamelist').append('<li class="game nocover" ><a ' + onclick + '><img alt="' + game.name + '" src="http://www.giovannicapuano.net/vaporizza/header.php?get=' + image + '&text=' + game.name +'" /></a></li>');
       }
     });
   }
@@ -124,9 +125,10 @@ function Steam(fso, shell) {
     shortcuts = $.parseXML(shortcuts);
     $('game', shortcuts).each(function() {
       gamelist.push({
-        name  : $('name', this) .text(),
-        exe   : $('exe', this)  .text(),
-        dir   : $('dir', this)  .text()
+        name  : $('name', this).text(),
+        exe   : $('exe',  this).text(),
+        dir   : $('dir',  this).text(),
+        id    : $('id',   this).text()
       });
     });
   }
