@@ -35,11 +35,9 @@ Gadgets on Windows 8
 Screenshots
 -----------
 
-- [http://i.imgur.com/hu5bq.jpg]
+- http://i.imgur.com/hu5bq.jpg
 
-- [http://i.imgur.com/Cw00o.jpg]
+- http://i.imgur.com/Cw00o.jpg
 
   [Windows Sidebar]: http://cl.ly/2k012I3J231b/download/Windows%20Sidebar%20for%20Windows%208%20RTM.zip
-  [http://i.imgur.com/SBD94.jpg]:http://i.imgur.com/SBD94.jpg
-  [http://i.imgur.com/PRk1I.jpg]:http://i.imgur.com/PRk1I.jpg
   [Downloads]:https://github.com/RoxasShadow/Vaporizza/downloads
