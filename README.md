@@ -10,7 +10,7 @@ Installation
 - Be sure your Steam profile is public
 - Go in your Steam path (usually `C:\Program Files (x86)\Steam\` or `C:\Program Files\Steam\`) and create here a text file called `userid.txt`
 - Go in your Steam profile, paste in `userid.txt` your userID (`http://steamcommunity.com/id/HappyUser/` => `HappyUser`) and save it
-- Download from the `[Downloads]` section the latest Vaporizza and rename it as `Vaporizza.gadget`
+- Download from the [Downloads] section the latest Vaporizza and rename it as `Vaporizza.gadget`
 - Install the gadget just clicking on it
 - Click the right mouse button on the desktop -> View -> Show Desktop Gadgets
 - ???
