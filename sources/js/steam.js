@@ -34,22 +34,6 @@ function Steam(fso, shell) {
     return ((a.name > b.name) ? 1 : ((a.name < b.name) ? -1 : 0));
   }
 
-  this.getConfig = function(path, file) {
-    var folder  = fso.GetFolder(path);
-    var sub     = new Enumerator(folder.SubFolders);
-
-    if(sub.atEnd())
-      return false;
-
-    var f       = fso.OpenTextFile(sub.item() + file, 1);
-    var file    = f.ReadAll();
-    f.Close();
-
-    return file.replace(/"[\t ]+"/gm, "\" : \"")
-               .replace(/"([\t\r\n ]+\{)/g, "\":$1")
-               .replace(/([}"])([\t\r\n ]+\")/g, "$1,$2");
-  }
-
   this.getFile = function(path) {
     var f     = fso.OpenTextFile(path, 1);
     var file  = f.ReadAll();
