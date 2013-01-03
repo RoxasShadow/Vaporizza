@@ -36,7 +36,6 @@ function init() {
     var path      = steam.getInstallationPath();
     var userdata  = path + '\\userdata';
 
-    var gameData  = steam.getConfig(userdata, '\\7\\remote\\sharedconfig.vdf');
     var userID    = steam.getUserID(path,     '\\userid.txt');
 
     var gamelist  = [];
