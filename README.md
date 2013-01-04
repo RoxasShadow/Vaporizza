@@ -14,6 +14,8 @@ Installation
 - Install `Vaporizza.gadget` just clicking on it
 - Click the right mouse button on the desktop -> View -> Show Desktop Gadgets
 - ???
+- If you like Vaporizza give it a star
+- ???
 - Profit!
 
 In order to add some applications in Steam (Origin, uPlay, free-DRM games and whatever), just `Steam -> Games -> Add a non steam game to my library`.
@@ -31,6 +33,12 @@ Gadgets on Windows 8
 - Delete `files` and `install.cmd` from `C:\System32`
 - ???
 - Profit!
+
+Dependences
+-----------
+
+- `zip` (for Linux) or `7zip` (for Windows) to build the gadget from the sources
+- Windows Sidebar
 
 Screenshots
 -----------
