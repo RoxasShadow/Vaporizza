@@ -39,7 +39,7 @@ function init() {
       return;
     }
     
-    var userID    = steam.getUserID(path,     '\\userid.txt');
+    var userID = steam.getUserID(path, '\\userid.txt') || steam.getUserID(path, '\\userid.txt.txt');
     if(userID == '') {
       $('#bg').text('Missing userid.txt');
       return;
