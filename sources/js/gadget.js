@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 by Giovanni Capuano <webmaster@giovannicapuano.net>
+ * Copyright (C) 2013 by Giovanni Capuano <webmaster@giovannicapuano.net>
  *
  * Vaporizza is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,10 +34,16 @@ function init() {
     var steam     = new Steam(fso, shell);
 
     var path      = steam.getInstallationPath();
-    var userdata  = path + '\\userdata';
-
-    var gameData  = steam.getConfig(userdata, '\\7\\remote\\sharedconfig.vdf');
+    if(path == '') {
+      $('#bg').text('Missing Steam directory');
+      return;
+    }
+    
     var userID    = steam.getUserID(path,     '\\userid.txt');
+    if(userID == '') {
+      $('#bg').text('Missing userid.txt');
+      return;
+    }
 
     var gamelist  = [];
     var gamelist2 = [];
@@ -48,6 +54,7 @@ function init() {
 
     if(nonsteam) {
       var shortcuts = steam.getFile(path + '\\shortcuts.xml');
+        
       if(shortcuts != '')
         steam.loadNonSteamGames(gamelist2, shortcuts);
     }

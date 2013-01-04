@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 by Giovanni Capuano <webmaster@giovannicapuano.net>
+ * Copyright (C) 2013 by Giovanni Capuano <webmaster@giovannicapuano.net>
  *
  * Vaporizza is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,28 +34,17 @@ function Steam(fso, shell) {
     return ((a.name > b.name) ? 1 : ((a.name < b.name) ? -1 : 0));
   }
 
-  this.getConfig = function(path, file) {
-    var folder  = fso.GetFolder(path);
-    var sub     = new Enumerator(folder.SubFolders);
-
-    if(sub.atEnd())
-      return false;
-
-    var f       = fso.OpenTextFile(sub.item() + file, 1);
-    var file    = f.ReadAll();
-    f.Close();
-
-    return file.replace(/"[\t ]+"/gm, "\" : \"")
-               .replace(/"([\t\r\n ]+\{)/g, "\":$1")
-               .replace(/([}"])([\t\r\n ]+\")/g, "$1,$2");
-  }
-
   this.getFile = function(path) {
-    var f     = fso.OpenTextFile(path, 1);
-    var file  = f.ReadAll();
-    f.Close();
+    try {
+      var f     = fso.OpenTextFile(path, 1);
+      var file  = f.ReadAll();
+      f.Close();
 
-    return file;
+      return file;
+    }
+    catch(e) {
+      return '';
+    }
   }
 
   this.getImageBySteam = function(game, image, customcover) {
@@ -98,7 +87,12 @@ function Steam(fso, shell) {
   }
 
   this.getUserID = function(path, file) {
-    return fso.OpenTextFile(path + file).ReadAll();
+    try {
+      return fso.OpenTextFile(path + file).ReadAll();
+    }
+    catch(e) {
+      return '';
+    }
   }
   
   this.loadSteamGames = function(gamelist, userid) {
