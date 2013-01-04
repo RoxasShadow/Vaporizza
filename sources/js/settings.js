@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 by Giovanni Capuano <webmaster@giovannicapuano.net>
+ * Copyright (C) 2013 by Giovanni Capuano <webmaster@giovannicapuano.net>
  *
  * Vaporizza is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,14 +31,18 @@ function saveSettings() {
 }
 
 function update(local) {
-  $.getJSON('https://api.github.com/repos/RoxasShadow/Vaporizza/downloads', function(data) {
-    var remote = data[0].name.split('- ')[1].replace('.gadget', '');
-    if(remote == undefined)
+  $.ajax({
+    type: 'get',
+    url: 'https://raw.github.com/RoxasShadow/Vaporizza/master/sources/gadget.xml',
+    dataType: 'xml',
+    success: function(response) {
+      $(response).find('gadget').children().each(function() {
+        var remote = $(this).attr('version');
+        $('#update').html(remote == local ? 'No updates available.' : '<a href="https://github.com/RoxasShadow/Vaporizza">Updates available (' + remote + ').</a>');
+    },
+    error: function(xhr, status, error) {
       $('#update').html('Error obtaining update informations.');
-    else if(remote == local)
-      $('#update').html('No updates available.');
-    else
-      $('#update').html('<a href="https://github.com/RoxasShadow/Vaporizza/downloads">An update is available (' + $.trim(remote) + ').</a>');
+    }
   });
 }
 

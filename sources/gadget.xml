@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <gadget>
   <name>Vaporizza</name>
-  <version>0.9.2</version>
+  <version>0.9.3</version>
   <author name="Giovanni Capuano">
     <info url="https://github.com/RoxasShadow" />
     <logo src="images/logo.jpg" />
