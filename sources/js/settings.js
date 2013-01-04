@@ -14,6 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with Vaporizza.  If not, see <http://www.gnu.org/licenses/>.
  */
+ /*
+ * Javascript Diff Algorithm
+ *  By John Resig (http://ejohn.org/)
+ *  Modified by Chu Alan "sprite"
+ *
+ * Released under the MIT license.
+ *
+ * More Info:
+ *  http://ejohn.org/projects/javascript-diff-algorithm/
+ */
 function SettingsClosing(event) {
   if(event.closeAction == event.Action.commit)
     if(!event.cancel)
@@ -31,18 +41,10 @@ function saveSettings() {
 }
 
 function update(local) {
-  $.ajax({
-    type: 'get',
-    url: 'https://raw.github.com/RoxasShadow/Vaporizza/master/sources/gadget.xml',
-    dataType: 'xml',
-    success: function(response) {
-      $(response).find('gadget').children().each(function() {
-        var remote = $(this).attr('version');
-        $('#update').html(remote == local ? 'No updates available.' : '<a href="https://github.com/RoxasShadow/Vaporizza">Updates available (' + remote + ').</a>');
-    },
-    error: function(xhr, status, error) {
-      $('#update').html('Error obtaining update informations.');
-    }
+  $.get('https://raw.github.com/RoxasShadow/Vaporizza/master/sources/gadget.xml', function(response) {
+    var remote = response.match('<version>(.*)</version>')[1].replace(',', '.');
+    
+    $('#update').html(local == remote ? 'No updates available.' : '<a href="https://github.com/RoxasShadow/Vaporizza">Updates available (' + remote + ').</a>');
   });
 }
 
