@@ -1,3 +1,5 @@
+[<img src="http://screenshotto.giovannicapuano.net/photos/Screenshots/GXWG.png" />]()
+
 Vaporizza
 =========
 Vaporize all your desktop icons!
