@@ -1,4 +1,4 @@
-[<img src="http://screenshotto.giovannicapuano.net/photos/Screenshots/GXWG.png" />]()
+[<img src="http://screenshotto.giovannicapuano.net/photos/Screenshots/YHJLO.png" />]()
 
 Vaporizza
 =========
@@ -43,9 +43,9 @@ Dependences
 Screenshots
 -----------
 
-- [http://screenshotto.giovannicapuano.net/photos/Screenshots/GXWG.png]
-
 - [http://screenshotto.giovannicapuano.net/photos/Screenshots/NJCB.png]
+
+- [http://screenshotto.giovannicapuano.net/photos/Screenshots/GXWG.png]
 
   [Vaporizza]: https://github.com/RoxasShadow/Vaporizza/raw/master/bin/Vaporizza.gadget
   [SteamShortcutsToXML]: https://github.com/RoxasShadow/Vaporizza/raw/master/tools/SteamShortcutsToXML.exe
