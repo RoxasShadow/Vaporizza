@@ -1,3 +1,5 @@
+[<img src="http://screenshotto.giovannicapuano.net/photos/Screenshots/YHJLO.png" />]()
+
 Vaporizza
 =========
 Vaporize all your desktop icons!
@@ -41,9 +43,9 @@ Dependences
 Screenshots
 -----------
 
-- [http://i.imgur.com/hu5bq.jpg]
+- [http://screenshotto.giovannicapuano.net/photos/Screenshots/NJCB.png]
 
-- [http://i.imgur.com/Cw00o.jpg]
+- [http://screenshotto.giovannicapuano.net/photos/Screenshots/GXWG.png]
 
   [Vaporizza]: https://github.com/RoxasShadow/Vaporizza/raw/master/bin/Vaporizza.gadget
   [SteamShortcutsToXML]: https://github.com/RoxasShadow/Vaporizza/raw/master/tools/SteamShortcutsToXML.exe

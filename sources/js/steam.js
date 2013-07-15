@@ -102,7 +102,8 @@ function Steam(fso, shell) {
       dataType  : 'text',
       async     : false,
       success   : function(data) {
-        json = eval(data.match(/^var rgGames = (.*);$/gm).toString().replace('var rgGames = ', '').replace(';', '').replace(/\\\//gi, '/'));
+        stuff = (data.split('var rgGames = ')[1].split('}];')[0] + '}];').replace(/\\\//gi, '/');
+        json  = eval(stuff);
         for(var i = 0, length = json.length; i < length; ++i)
           gamelist.push({
             appid     : json[i].appid,
